@@ -1,10 +1,12 @@
-import { io, Socket } from "socket.io-client";
 import Message from "./Message";
 import styled from "styled-components";
 import TextBar from "./TextBar";
+import { useParams } from "react-router-dom";
+import { useEffect } from "react";
+import { Socket } from "socket.io-client";
 
 function ChatRoom() {
-  // const socket = io("http://localhost:3000");
+  const params = useParams();
   const messages: { time: string; username: string; message: string }[] = [
     {
       time: "12:00",
@@ -207,6 +209,10 @@ function ChatRoom() {
       message: "Shut up !",
     },
   ];
+
+  function sendMessage() {
+    console.log("send");
+  }
 
   return (
     <ChatContainer>

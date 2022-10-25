@@ -1,7 +1,27 @@
-import React from "react";
+import { io, Socket } from "socket.io-client";
 import styled from "styled-components";
+import http from "axios";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Landing = () => {
+  var socket: Socket;
+  var roomName: string = "";
+  var username: string = "";
+  var navigate = useNavigate();
+
+  function connectToSocket(isGlobal: boolean = true): void {
+    if (isGlobal) {
+      console.log("first");
+      socket = io("http://localhost:5000");
+      socket.emit("new_user", { username: username });
+      navigate(`/chatroom?username=${username}`);
+    } else {
+      // créer un salon
+      navigate(`/chatroom?username=${username}&room=${roomName}`);
+    }
+  }
+
   return (
     <LandingContainer>
       <LandingTitle>Welcome to Live Chat</LandingTitle>
@@ -10,8 +30,13 @@ const Landing = () => {
           Join the <span>global</span> chat
         </GlobalTitle>
         <Field>Username</Field>
-        <GlobalInput type="text" name="username" id="username" />
-        <GlobalButton>Join Global Room</GlobalButton>
+        <GlobalInput
+          type="text"
+          onChange={(e) => (username = e.target.value)}
+        />
+        <GlobalButton onClick={() => connectToSocket(true)}>
+          Join Global Room
+        </GlobalButton>
       </Global>
       <span>Or</span>
       <Room>
@@ -19,10 +44,12 @@ const Landing = () => {
           Create your <span>private</span> room
         </GlobalTitle>
         <Field>Username</Field>
-        <GlobalInput type="text" name="username" id="username" />
+        <GlobalInput onChange={(e) => (username = e.target.value)} />
         <Field>Room name</Field>
-        <GlobalInput type="text" name="roomname" id="roomname" />
-        <GlobalButton>Create Private Room</GlobalButton>
+        <GlobalInput onChange={(e) => (roomName = e.target.value)} />
+        <GlobalButton onClick={() => connectToSocket(false)}>
+          Create Private Room
+        </GlobalButton>
       </Room>
     </LandingContainer>
   );
@@ -41,6 +68,7 @@ const LandingTitle = styled.h1`
   font-size: 4.5rem;
   letter-spacing: 1px;
   margin: 30px;
+  text-align: center;
 `;
 
 const Global = styled.div`
@@ -85,7 +113,7 @@ const GlobalInput = styled.input`
   margin-bottom: 15px;
   &:focus {
     outline: none;
-    border:3px solid #38bdf8;
+    border: 3px solid #38bdf8;
   }
 `;
 
