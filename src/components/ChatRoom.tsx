@@ -1,226 +1,28 @@
 import Message from "./Message";
 import styled from "styled-components";
 import TextBar from "./TextBar";
-import { useParams } from "react-router-dom";
-import { useEffect } from "react";
-import { Socket } from "socket.io-client";
+import { useSearchParams } from "react-router-dom";
+import useSocket from "../Socket";
 
 function ChatRoom() {
-  const params = useParams();
-  const messages: { time: string; username: string; message: string }[] = [
-    {
-      time: "12:00",
-      username: "John",
-      message: "Hello",
-    },
-    {
-      time: "12:01",
-      username: "Fu",
-      message: "Hi !",
-    },
-    {
-      time: "12:02",
-      username: "Ma",
-      message: "What's up ?",
-    },
-    {
-      time: "12:02",
-      username: "Ma",
-      message: "What's up ?",
-    },
-    {
-      time: "12:02",
-      username: "Ma",
-      message: "What's up ?",
-    },
-    {
-      time: "12:02",
-      username: "Ma",
-      message: "What's up ?",
-    },
-    {
-      time: "12:02",
-      username: "Ma",
-      message: "What's up ?",
-    },
-    {
-      time: "12:02",
-      username: "Ma",
-      message: "What's up ?",
-    },
-    {
-      time: "12:02",
-      username: "Ma",
-      message: "What's up ?",
-    },
-    {
-      time: "12:02",
-      username: "Ma",
-      message: "What's up ?",
-    },
-    {
-      time: "12:02",
-      username: "Ma",
-      message: "What's up ?",
-    },
-    {
-      time: "12:02",
-      username: "Ma",
-      message: "What's up ?",
-    },
-    {
-      time: "12:02",
-      username: "Ma",
-      message: "What's up ?",
-    },
-    {
-      time: "12:02",
-      username: "Ma",
-      message: "What's up ?",
-    },
-    {
-      time: "12:02",
-      username: "Ma",
-      message: "What's up ?",
-    },
-    {
-      time: "12:02",
-      username: "Ma",
-      message: "What's up ?",
-    },
-    {
-      time: "12:02",
-      username: "Ma",
-      message: "What's up ?",
-    },
-    {
-      time: "12:02",
-      username: "Ma",
-      message: "What's up ?",
-    },
-    {
-      time: "12:02",
-      username: "Ma",
-      message: "What's up ?",
-    },
-    {
-      time: "12:02",
-      username: "Ma",
-      message: "What's up ?",
-    },
-    {
-      time: "12:02",
-      username: "Ma",
-      message: "What's up ?",
-    },
-    {
-      time: "12:02",
-      username: "Ma",
-      message: "What's up ?",
-    },
-    {
-      time: "12:02",
-      username: "Ma",
-      message: "What's up ?",
-    },
-    {
-      time: "12:02",
-      username: "Ma",
-      message: "What's up ?",
-    },
-    {
-      time: "12:02",
-      username: "Ma",
-      message: "What's up ?",
-    },
-    {
-      time: "12:02",
-      username: "Ma",
-      message: "What's up ?",
-    },
-    {
-      time: "12:02",
-      username: "Ma",
-      message: "What's up ?",
-    },
-    {
-      time: "12:02",
-      username: "Ma",
-      message: "What's up ?",
-    },
-    {
-      time: "12:02",
-      username: "Ma",
-      message: "What's up ?",
-    },
-    {
-      time: "12:02",
-      username: "Ma",
-      message: "What's up ?",
-    },
-    {
-      time: "12:02",
-      username: "Ma",
-      message: "What's up ?",
-    },
-    {
-      time: "12:02",
-      username: "Ma",
-      message: "What's up ?",
-    },
-    {
-      time: "12:02",
-      username: "Ma",
-      message: "What's up ?",
-    },
-    {
-      time: "12:02",
-      username: "Ma",
-      message: "What's up ?",
-    },
-    {
-      time: "12:02",
-      username: "Ma",
-      message: "What's up ?",
-    },
-    {
-      time: "12:02",
-      username: "Ma",
-      message: "What's up ?",
-    },
-    {
-      time: "12:02",
-      username: "Ma",
-      message: "What's up ?",
-    },
-    {
-      time: "12:02",
-      username: "Ma",
-      message: "What's up ?",
-    },
-    {
-      time: "12:02",
-      username: "Ma",
-      message: "What's up ?",
-    },
-    {
-      time: "12:03",
-      username: "Xi",
-      message: "Shut up !",
-    },
-  ];
+  const { messages, sendMessage } = useSocket();
 
-  function sendMessage() {
-    console.log("send");
-  }
+  const formatTime = () => {
+    const hour = new Date().getHours();
+    const minutes = new Date().getMinutes();
+    const seconds = new Date().getSeconds();
+
+    return `${hour}:${minutes}:${seconds}`;
+  };
 
   return (
     <ChatContainer>
       <ChatTitle>Live Chat</ChatTitle>
-      <Chat>
-        {messages.map((msg) => {
+      <Chat >
+        {messages.map((msg: any, index: number) => {
           return (
             <Message
+              key={index}
               time={msg.time}
               message={msg.message}
               username={msg.username}
@@ -228,7 +30,7 @@ function ChatRoom() {
           );
         })}
       </Chat>
-      <TextBar />
+      <TextBar time={formatTime} msg={sendMessage} />
     </ChatContainer>
   );
 }

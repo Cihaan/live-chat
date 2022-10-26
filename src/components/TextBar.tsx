@@ -1,12 +1,30 @@
-import React from "react";
+import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import styled from "styled-components";
 
-function TextBar() {
+type a = {
+  msg: (username: string | null, message: string, time: string) => void;
+  time: () => string
+}
+
+function TextBar({ msg, time  }: a) {
+  let [searchParams, setSearchParams] = useSearchParams();
+  let [message, setMessage] = useState("")
+
+  const handleChange = (e: any) => {
+    setMessage(e.target.value);
+  }
+
+  function handleSend() {
+    msg(searchParams.get("username"), message, time());
+    setMessage("")
+  }
+
   return (
     <ChatBar>
       {/* <Emoji>😂</Emoji> */}
-      <TextZone placeholder="Chat message" />
-      <SendButton>Send</SendButton>
+      <TextZone onChange={() => handleChange(event)}  value={message} placeholder="Chat message" />
+      <SendButton onClick={handleSend} >Send</SendButton>
     </ChatBar>
   );
 }

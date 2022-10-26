@@ -1,20 +1,13 @@
-import { io, Socket } from "socket.io-client";
 import styled from "styled-components";
-import http from "axios";
-import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Landing = () => {
-  var socket: Socket;
   var roomName: string = "";
   var username: string = "";
   var navigate = useNavigate();
 
   function connectToSocket(isGlobal: boolean = true): void {
     if (isGlobal) {
-      console.log("first");
-      socket = io("http://localhost:5000");
-      socket.emit("new_user", { username: username });
       navigate(`/chatroom?username=${username}`);
     } else {
       // créer un salon
@@ -38,7 +31,7 @@ const Landing = () => {
           Join Global Room
         </GlobalButton>
       </Global>
-      <span>Or</span>
+      {/* <span>Or</span>
       <Room>
         <GlobalTitle>
           Create your <span>private</span> room
@@ -50,7 +43,7 @@ const Landing = () => {
         <GlobalButton onClick={() => connectToSocket(false)}>
           Create Private Room
         </GlobalButton>
-      </Room>
+      </Room> */}
     </LandingContainer>
   );
 };

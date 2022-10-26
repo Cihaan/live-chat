@@ -3,6 +3,7 @@ const express = require("express");
 const cors = require("cors");
 import { createServer } from "http";
 import { Server } from "socket.io";
+import { Socket } from "socket.io-client";
 
 const PORT: number = 5000;
 const app: Application = express();
