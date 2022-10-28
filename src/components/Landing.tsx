@@ -53,7 +53,8 @@ const LandingContainer = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  justify-content: center;
+  gap: 40px;
 `;
 
 const LandingTitle = styled.h1`
@@ -69,6 +70,7 @@ const Global = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  /* flex-grow: 1; */
 `;
 
 const Room = styled.div`

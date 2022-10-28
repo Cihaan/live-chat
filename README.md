@@ -2,6 +2,10 @@
 ## About the app
 This app was made to disover the websocket protocol with react and use the socket.io library.
 
+## Preview
+<img src="./src/assets/pvw1.png" />  
+<img src="./src/assets/pvw2.png" />  
+
 ## Commands
 Run this command to start the server on the port 3000
 ```js
@@ -16,6 +20,7 @@ Note that you can use the app on your local network by using this command and ac
 ```js
 pnpm run dev --host
 ```
+
 
 ## Used tchnologies
 - React
